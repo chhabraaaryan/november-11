@@ -181,13 +181,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
 
+# HARSHIT 13-> IMPORT FROM DJANGO DEFAULT
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
 
-# SMTP configuration
+# SMTP configuration (HARSHIT DETAILS)
 
 # EMAIL_HOST = config('EMAIL_HOST')
 # EMAIL_PORT = config('EMAIL_PORT', cast=int)

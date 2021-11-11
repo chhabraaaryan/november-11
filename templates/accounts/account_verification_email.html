@@ -1,10 +1,24 @@
+{% comment %} Confirm Registration {% endcomment %}
+
 {% autoescape off %}
+{% comment %} this is prootection against cross site scripting 
+help against sql injection as well{% endcomment %}
 
-Hi {{user.first_name}},
+Hello! {{user.first_name}},
 
-Please click on below link to confirm your registration.
+Click on the link below to confirm your registration.
+
+{% comment %} when user click on this link -> activate view {% endcomment %}
 http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+{% comment %} encode and decode them {% endcomment %}
+{% comment %} this token is only for one use {% endcomment %}
 
-If you think it's not you, please ignore this email.
+{% comment %} create url in urls.py {% endcomment %}
 
+If this isn't you, kindly ignore this email. 
+
+Have a Good Day!
+Jai Laxmi
 {% endautoescape %}
+
+{% comment %} configure SMTP {% endcomment %}

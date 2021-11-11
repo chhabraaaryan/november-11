@@ -110,7 +110,8 @@
 
 
 						<div id="paypal-button-container">
-							<!-- PayPal Button Will Load -->
+						{% comment %} PMPP {% endcomment %}
+							{% comment %} Paypal button will load here {% endcomment %}
 						</div>
 
 					</div> <!-- card-body.// -->
@@ -147,18 +148,30 @@
     return cookieValue;
 }
 
+	{% comment %} Make payment dynamic, from static (as per paypal code) {% endcomment %}
+
+{% comment %} string because it is java script {% endcomment %}
 	var amount = "{{ grand_total }}"
+
 	var url = "{% url 'payments' %}"
 	var csrftoken = getCookie('csrftoken');
 	var orderID = "{{order.order_number}}"
 	var payment_method = 'PayPal'
+
 	var redirect_url = "{% url 'order_complete' %}"
-	// Render the PayPal button into #paypal-button-container
+
+
+
+	// ===============================================
+
+
+	{% comment %} PICKED UP FROM PAYPAL SET UP/ DEVELOPERS {% endcomment %}
+
 	paypal.Buttons({
 
 		style: {
 			color: 'blue',
-			shape: 'rect',
+			shape: 'pill',
 			label: 'pay',
 			height: 40
 		},
@@ -168,35 +181,48 @@
 			return actions.order.create({
 				purchase_units: [{
 					amount: {
-						value: amount,
+						value: amount, //changed fixed number to var amount so that transaction amount can be dynamic
 					}
 				}]
 			});
 		},
 
-		// Finalize the transaction
+		// Approving Transaction
 		onApprove: function(data, actions) {
 			return actions.order.capture().then(function(details) {
+
+
 				// Show a success message to the buyer
 				console.log(details);
 				sendData();
+
+				{% comment %} new function to send data on oour backe-end {% endcomment %}
 				function sendData(){
+					{% comment %} to handle response from paypal: use fetch function {% endcomment %}
+
+					{% comment %} fetch api: will take url, do manipulation {% endcomment %}
 					fetch(url, {
-						method : "POST",
-						headers: {
-							"Content-type": "application/json",
-							"X-CSRFToken": csrftoken,
+						method : "POST", //
+						headers: { 
+							"Content-type": "application/json", 
+							"X-CSRFToken": csrftoken, //sending the data with post_request will require csrf token
 						},
+						{% comment %} path given to payments view {% endcomment %}
+
+
+
+						{% comment %} In body: send all details about the payments {% endcomment %}
 						body: JSON.stringify({
 							orderID: orderID,
 							transID: details.id,
 							payment_method: payment_method,
-							status: details.status,
+							status: details.status, //completed returned
 						}),
 					})
 				  .then((response) => response.json())
 				  .then((data) => {
 						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+					{% comment %} Payment_ID of aaryanpavvit.chhabra@gmail.com {% endcomment %}
 					});
 				}
 			});
@@ -204,6 +230,9 @@
 
 
 	}).render('#paypal-button-container');
+
 </script>
+
+{% comment %} ================================================ {% endcomment %}
 
 {% endblock %}

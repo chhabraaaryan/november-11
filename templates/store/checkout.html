@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-
 
 <section class="section-content padding-y bg">
 <div class="container">
 
-<!-- ============================ COMPONENT 1 ================================= -->
 
+{% comment %} Remove partitions {% endcomment %}
 <div class="row">
 	<aside class="col-lg-6">
 <div class="card">
@@ -28,7 +26,7 @@
       </div>
       <div class="form-row">
         <div class="col form-group">
-          <label for="">Email</label>
+          <label for="">Email ID</label>
           <input type="email" name="email" class="form-control" required>
         </div>
         <div class="col form-group">

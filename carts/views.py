@@ -160,6 +160,7 @@ def remove_cart_item(request, product_id, cart_item_id):
     cart_item.delete()
     return redirect('cart')
 
+# HARHSIT6
 
 def cart(request, total=0, quantity=0, cart_items=None):
     try:
@@ -175,6 +176,10 @@ def cart(request, total=0, quantity=0, cart_items=None):
             quantity += cart_item.quantity
         tax = (2 * total)/100
         grand_total = total + tax
+        
+        # When there is no object found-> we are saying object does not exist
+        # this comes from django.core.exceptions
+        # 
     except ObjectDoesNotExist:
         pass #just ignore
 
@@ -188,11 +193,11 @@ def cart(request, total=0, quantity=0, cart_items=None):
     return render(request, 'store/cart.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login')#have to login before check out 
 def checkout(request, total=0, quantity=0, cart_items=None):
     try:
-        tax = 0
-        grand_total = 0
+        tax = 0 #to initialize it
+        grand_total = 0 #to remove error when objects does not exist
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:

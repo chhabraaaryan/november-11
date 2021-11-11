@@ -1,13 +1,21 @@
+{% comment %} 
+Alert message that can be closed manually.
+copy code from accounts. 
+{% endcomment %}
+
 {% if messages %}
 
+{% comment %} remove ul that shows dot {% endcomment %}
     {% for message in messages %}
     <div id="message" class="container">
     <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+
+    {% comment %} For alert box to be closed manually -> For that cross/close button {% endcomment %}
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
         {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
         {{ message }}
     </div>
     </div>
-    {% endfor %}
+    {% endfor %} 
 
 {% endif %}

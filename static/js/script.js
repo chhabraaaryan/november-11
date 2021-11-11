@@ -58,6 +58,9 @@ $(document).ready(function() {
 });
 // jquery end
 
+// =====================================
+
+// In 4 seconds the alert message willl automatically dissapear
 setTimeout(function(){
   $('#message').fadeOut('slow')
 }, 4000)

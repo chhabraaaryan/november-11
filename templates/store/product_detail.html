@@ -75,10 +75,20 @@
 								</div>
 							</div>
 							<hr>
+							{% comment %} Aaryan {% endcomment %}
+
+							{% comment %} check if product stock is less than equal to zero {% endcomment %}
 							{% if single_product.stock <= 0 %}
-							<h5 class="text-danger">Out of Stock</h5>
-							{% else %}
+								<h5 class="text-danger">Out of Stock</h5>
+								{% if in_cart %}
+									{% comment %} when it is added inside cart {% endcomment %}
+									{% comment %} CHECK AARYAN {% endcomment %}
+									<button type="fname" class="btn  btn-succeess"> <span class="text">Added to Cart</span> <i class="fa fa-check"></i> </button>
+									<button type="{%url 'cart' %}" class="btn  btn-outline-primary"> <span class="text">View Cart</span> <i class="fa fa-check"></i> </button>
+								{% else %}
+							{% comment %} go to the form action {% endcomment %}
 							<button type="submit" class="btn  btn-primary"> <span class="text">Add to Cart</span> <i class="fa fa-shopping-cart"></i> </button>
+								{% endif%}
 							{% endif %}
 						</article> <!-- product-info-aside .// -->
 					</form>

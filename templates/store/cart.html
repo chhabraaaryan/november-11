@@ -7,13 +7,18 @@
 <section class="section-content padding-y bg">
 <div class="container">
 
-<!-- ============================ COMPONENT 1 ================================= -->
+ {% comment %} COMP. 1 / HARSHIT AA {% endcomment %}
+
+{% comment %}  If there is no cart item then we will print message here{% endcomment %}
 {% if not cart_items %}
-	<h2 class="text-center">Your Shopping Cart is Empty</h2>
+	<h2 class="text-center">Shopping Cart is Empty</h2> 
+	{% comment %} Make text in centre {% endcomment %}
 	<br>
 	<div class="text-center">
-		<a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
+		<a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a> 
+		{% comment %} Button comes with a blue color {% endcomment %}
 	</div>
+	{% comment %} Or print this one {% endcomment %}
 {% else %}
 <div class="row">
 	<aside class="col-lg-9">
@@ -29,13 +34,16 @@
 </thead>
 <tbody>
 
+{% comment %} HARSHIT AB {% endcomment %}
 {% for cart_item in cart_items %}
 <tr>
 	<td>
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
 			<figcaption class="info">
+			{% comment %} To be able to go to product in the cart portal {% endcomment %}
 				<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+				{% comment %} Should go to product detail page. {% endcomment %}
 				<p class="text-muted small">
 					{% if cart_item.variations.all %}
 						{% for item in cart_item.variations.all %}
@@ -103,7 +111,10 @@
 			<p class="text-center mb-3">
 				<img src="{% static './images/misc/payments.png' %}" height="26">
 			</p>
+			{% comment %} Checkout page link {% endcomment %}
 			<a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Checkout </a>
+
+			{% comment %} There shoould be option to go back to store and continue shopping{% endcomment %}
 			<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
@@ -111,12 +122,14 @@
 </aside> <!-- col.// -->
 
 
-</div> <!-- row.// -->
+</div> 
 {% endif %}
-<!-- ============================ COMPONENT 1 END .// ================================= -->
+{% comment %} ========================================================== {% endcomment %}
 
-</div> <!-- container .//  -->
+</div> 
+{% comment %}  {% endcomment %}
+
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+{% comment %} ============================================= {% endcomment %}
 
 {% endblock %}

@@ -12,15 +12,19 @@ from django.template.loader import render_to_string
 
 def payments(request):
     body = json.loads(request.body)
+    # print(body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     # Store transaction details inside Payment model
     payment = Payment(
         user = request.user,
+        # transID is inside the body on TM there is transID,paym Method,amount,status
         payment_id = body['transID'],
         payment_method = body['payment_method'],
-        amount_paid = order.order_total,
-        status = body['status'],
+        amount_paid = order.order_total, #created order as a global
+        status = body['status'], 
+        
+        # these will get saved inside the database
     )
     payment.save()
 

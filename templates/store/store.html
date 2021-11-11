@@ -3,6 +3,9 @@
 
 {% block content %}
 <!-- ========================= SECTION PAGETOP ========================= -->
+
+{% comment %} HARSHIT10 {% endcomment %}
+{% comment %} If search is in path it will show result {% endcomment %}
 <section class="section-pagetop bg">
 <div class="container">
 	{% if 'search' in request.path %}
@@ -56,6 +59,9 @@
 		</div>
 </header><!-- sect-heading -->
 
+
+{% comment %} HARSHIT 11 {% endcomment %}
+{% comment %} If no product is found it should run and show something {% endcomment %}
 <div class="row">
 	{% if products %}
 	{% for product in products %}
@@ -73,43 +79,67 @@
 						<span class="price">$ {{ product.price }}</span>
 					</div> <!-- price-wrap.// -->
 				</div>
-				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details </a>
+				{% comment %} HARSHIT1 {% endcomment %}
+				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details </a>  
 			</figcaption>
 		</figure>
 	</div> <!-- col.// -->
 	{% endfor %}
 	{% else %}
+	{% comment %} if nothing is found {% endcomment %}
 	<div>
-		<h2>No result found. Please try again.</h2>
+		<h2>Oops! No Results!</h2>
 	</div>
 	{% endif %}
 </div> <!-- row end.// -->
+
+{% comment %} HARSHIT2 {% endcomment %}
+
+
+{% comment %} Paginator Section {% endcomment %}
 
 
 <nav class="mt-4" aria-label="Page navigation sample">
 	{% if products.has_other_pages %}
 	  <ul class="pagination">
 			{% if products.has_previous %}
+			{% comment %} if we have other pages it will show {% endcomment %}
+	{% comment %} show paginator only if page has other products {% endcomment %}
+
+
+{% comment %} Previous should be active only when user has moved after page 1 {% endcomment %}
+			{% comment %} Go to previous, Next, 1,2,3 {% endcomment %}
 	    <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
 			{% else %}
+			{% comment %} there is no previous page so this button is disabled and href is # {% endcomment %}
 			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
 			{% endif %}
 
+			{% comment %} since there could be n number of products, paginator number will be dynamic {% endcomment %}
+			{% comment %} to acomodate n number of pages, it will automatic change {% endcomment %}
 			{% for i in products.paginator.page_range %}
-				{% if products.number == i %}
+				{% if products.number == i %} 
 	    		<li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
 				{% else %}
 					<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+					{% comment %} print page number dynamically {% endcomment %}
 				{% endif %}
 	    {% endfor %}
 
+
+
+{% comment %} Next Button {% endcomment %}
+{% comment %} inbuilt django documentation {% endcomment %}
 			{% if products.has_next %}
+			{% comment %} instead of previous it is next page number {% endcomment %}
 	    	<li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
 			{% else %}
 				<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 			{% endif %}
 	  </ul>
 	{% endif %}
+
+
 </nav>
 
 	</main> <!-- col.// -->
@@ -118,6 +148,7 @@
 
 </div> <!-- container .//  -->
 </section>
+
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 {% endblock %}
